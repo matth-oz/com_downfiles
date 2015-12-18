@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fieldset name="detail" label="COM_DOWNFILES_ITEM_DETAIL">
+        <field name="id" type="hidden" />
+        <field name="filename" 
+		type="file" 
+		label="COM_DOWNFILES_ITEM_FILE" 
+		description="COM_DOWNFILES_ITEM_FILE_DESCRIPTION" />       
+        <field 	name="file_desc"
+		type="text"
+		label="COM_DOWNFILES_ITEM_DESC_LABEL"
+		description="COM_DOWNFILES_ITEM_DESC_DESCRIPTION"
+		size="40"
+		class="inputbox"
+		required="true"
+		default="" />
+        <field  name="published" 
+		type="list" 
+		label="JSTATUS" 
+		description="JFIELD_PUBLISHED_DESC" 
+		class="chzh-color-state" 
+		filter="intval" 
+		size="1" 
+		default="1">
+                    <option value="1">JPUBLISHED</option>
+                    <option value="0">JUNPUBLISHED</option>
+	</field>
+        
+    </fieldset>
+</form>

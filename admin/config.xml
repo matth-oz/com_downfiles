@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <fieldset name="component" 
+        label="COM_DOWNFILES_COMPONENT_LABEL"
+        description="COM_DOWNFILES_COMPONENT_DESC">
+        
+        <field name="trgfolder" 
+            type="text" 
+            label="COM_DOWNFILES_TRGFLD_LABEL" 
+            description="COM_DOWNFILES_TRGFLD_DESC" />
+        
+        <field name="alwflstypes" 
+            type="text" 
+            label="COM_DOWNFILES_ALWFLTPS_LABEL" 
+            description="COM_DOWNFILES_ALWFLTPS_DESC" />
+    </fieldset>
+</config>

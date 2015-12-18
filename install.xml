@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.3" method="upgrade">
+	<name>COM_DOWNFILES</name>
+	<creationDate>December 2015</creationDate>
+	<author>Matvey Zemskov</author>
+	<autorEmail>info@mattweb.ru</autorEmail>
+	<authorUrl>http://mattweb.ru</authorUrl>
+	<license>License Info</license>
+	<version>1.0.1</version>
+	<description>COM_DOWNFILES_DESCRIPTION</description>
+	
+	<files folder="site">
+		<folder>language</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+		<filename>controller.php</filename>
+		<filename>downfiles.php</filename>		
+	</files>
+	<languages folder="site">
+		<language tag="ru-RU">language/ru-RU/ru-RU.com_downfiles.ini</language>
+	</languages>
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/unistall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<administration>
+		<menu img="class:menu">COM_DOWNFILES</menu>
+                <submenu>
+                    <menu img="class:upload" link="option=com_downfiles">COM_DOWNFILES_FILES</menu>
+                    <menu img="class:info-2" link="option=com_downfiles&amp;view=stats">COM_DOWNFILES_STATISTIC</menu>
+                </submenu>
+		<files folder="admin">
+			<folder>controllers</folder>
+			<folder>language</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+			<folder>helpers</folder>
+			<filename>controller.php</filename>
+			<filename>downfiles.php</filename>
+			<filename>config.xml</filename>
+		</files>
+		<languages folder="admin">
+			<language tag="ru-RU">language/ru-RU/ru-RU.com_downfiles.ini</language>
+			<language tag="ru-RU">language/ru-RU/ru-RU.com_downfiles.sys.ini</language>
+		</languages>
+	</administration>
+</extension>
