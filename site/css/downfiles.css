@@ -1,0 +1,4 @@
+.downfiles-list{}
+.downfiles-list li{margin-bottom:7px; font-size:14px;}
+.downfiles-list li a{text-decoration: none;}
+.downfiles-list li a:hover{text-decoration: underline;}
