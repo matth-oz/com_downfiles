@@ -14,4 +14,21 @@ class DownfilesModelItem extends JModelLegacy{
            return $data_row["filename"];          
         }
     }
+    
+    public function saveDownloadStatInfo($file_id, $date, $ip){
+        $db = JFactory::getDbo();
+        
+        $file_id = (int)$file_id;
+        $date = mysql_escape_string($date);
+        $ip = mysql_escape_string($ip);
+        
+        $q = "INSERT INTO `#__downfiles_stat`(`filename_id`, `date`, `ip_addr`) VALUES ('".$file_id."', '".$date."', '".$ip."')";
+        
+        $res = $db->setQuery($q)->execute();
+        
+        return $res;
+    }
+    
+  
+    
 }
