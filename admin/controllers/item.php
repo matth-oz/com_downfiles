@@ -11,6 +11,7 @@ class DownfilesControllerItem extends JControllerForm{
             
             $session = JSession::getInstance();
             $session->clear('FNAME_DB');
+            $session->clear('FSIZE_DB');
             
             // получаем параметры компонента
             $params = JComponentHelper::getParams('com_downfiles');
@@ -18,9 +19,9 @@ class DownfilesControllerItem extends JControllerForm{
             $arAllowFiles = explode(',', $params->get('alwflstypes')); 
            
             // инфа о звгружаемом файле
-            //$arrUplfile = $this->getUplFilename();
             $arrUplfile = DownfilesHelper::getUplFilename();
             $uplFilename = $targetFld .'/'.$arrUplfile['name']['filename'];
+            $uplFilesize = DownfilesHelper::convertFileSize($arrUplfile['size']['filename']);
             
             $dest = JPATH_ROOT.'/'.$uplFilename;
             
@@ -43,9 +44,9 @@ class DownfilesControllerItem extends JControllerForm{
                     $fext = substr(strrchr($uplFilename, '.'), 1);
                     if(in_array($fext, $arAllowFiles)){
                         $src = $arrUplfile['tmp_name']['filename'];  
-                        //$dest = JPATH_ROOT.'/'.$uplFilename;
                         JFile::upload($src, $dest);
                         $session->set('FNAME_DB', $uplFilename);
+                        $session->set('FSIZE_DB', $uplFilesize);
                     }
                     else{                       
                         $this->setError(JText::_('COM_DOWNFILES_ERR_FILE_FORMAT'));
@@ -57,7 +58,6 @@ class DownfilesControllerItem extends JControllerForm{
             }
             else{
                 // добавление
-                //$dest = JPATH_ROOT.'/'.$uplFilename;
                 if(JFile::exists($dest)){                    
                     // файл существует
                     $this->setError(JText::_('COM_DOWNFILES_ERR_FILE_EXISTS'));
@@ -70,9 +70,9 @@ class DownfilesControllerItem extends JControllerForm{
                     $fext = substr(strrchr($uplFilename, '.'), 1);
                     if(in_array($fext, $arAllowFiles)){
                         $src = $arrUplfile['tmp_name']['filename'];  
-                        //$dest = JPATH_ROOT.'/'.$uplFilename;
                         JFile::upload($src, $dest);
                         $session->set('FNAME_DB', $uplFilename);
+                        $session->set('FSIZE_DB', $uplFilesize);
                     }
                     else{
                         $this->setError(JText::_('COM_DOWNFILES_ERR_FILE_FORMAT'));
@@ -84,11 +84,4 @@ class DownfilesControllerItem extends JControllerForm{
             }
         parent::save($key, $urlVar);
     }
-   
-    /*protected function getUplFilename(){
-        $fileInput = new JInput($_FILES);                
-        $file = $fileInput->get('jform', null, 'array'); 
-        return $file;
-    }*/
-    
 }

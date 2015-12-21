@@ -40,8 +40,10 @@ class DownfilesModelItem extends JModelAdmin{
     protected function prepareTable($table){
          $session = JSession::getInstance();
          $fname = $session->get('FNAME_DB');
+         $fsize = $session->get('FSIZE_DB');
          if(!empty($fname)){
              $table->filename = $fname;
+             $table->file_size = $fsize; 
          }
     }
     

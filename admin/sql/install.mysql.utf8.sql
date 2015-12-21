@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `#__downfiles`(
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`filename` VARCHAR(1024) NOT NULL,
 	`file_desc` VARCHAR(150) NOT NULL,
+	`file_size` VARCHAR(10) NOT NULL,
 	`published` tinyint(4) DEFAULT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
