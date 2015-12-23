@@ -10,7 +10,9 @@
 	<description>COM_DOWNFILES_DESCRIPTION</description>
 	
 	<files folder="site">
+		<folder>controllers</folder>
 		<folder>language</folder>
+		<folder>css</folder>
 		<folder>models</folder>
 		<folder>views</folder>
 		<filename>controller.php</filename>
@@ -37,12 +39,15 @@
                 </submenu>
 		<files folder="admin">
 			<folder>controllers</folder>
+			<folder>geo</folder>
+			<folder>helpers</folder>
+			<folder>img</folder>
+			<folder>js</folder>
 			<folder>language</folder>
 			<folder>models</folder>
 			<folder>sql</folder>
 			<folder>tables</folder>
 			<folder>views</folder>
-			<folder>helpers</folder>
 			<filename>controller.php</filename>
 			<filename>downfiles.php</filename>
 			<filename>config.xml</filename>

@@ -36,5 +36,21 @@ class DownfilesControllerDownFiles extends JControllerAdmin{
            JLog::add(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), JLog::WARNING, 'jerror');
         }
         parent::delete();
-    }    
+    }
+    
+    public function getipinfo(){
+         $ip = JFactory::getApplication()->input->get('ip');
+         if(!empty($ip)){
+            header('Content-type: text/plain; charset=utf8');
+            require_once(JPATH_COMPONENT.'/geo/SxGeo.php');
+            $SxGeo = new SxGeo(JPATH_COMPONENT.'/geo/SxGeoCity.dat');
+            $info = $SxGeo->get(trim($ip));
+    
+            echo json_encode($info['city']);
+            die();
+         }
+         else{
+            return false; 
+         }
+    }
 }
