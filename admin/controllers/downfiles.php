@@ -42,11 +42,23 @@ class DownfilesControllerDownFiles extends JControllerAdmin{
          $ip = JFactory::getApplication()->input->get('ip');
          if(!empty($ip)){
             header('Content-type: text/plain; charset=utf8');
-            require_once(JPATH_COMPONENT.'/geo/SxGeo.php');
-            $SxGeo = new SxGeo(JPATH_COMPONENT.'/geo/SxGeoCity.dat');
-            $info = $SxGeo->get(trim($ip));
-    
-            echo json_encode($info['city']);
+            $xml_file = 'http://api.sypexgeo.net/xml/'.$ip;
+            $xml_object = new DOMDocument();
+            $xml_object->load($xml_file);
+
+            $elem_country = $xml_object->getElementsByTagName('country')->item(0)->getElementsByTagName('name_ru');
+            $elem_city = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('name_ru');
+            $elem_lat = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('lat');
+            $elem_lng = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('lon');
+
+            $arCityInfo = Array(
+                'country' => $elem_country->item(0)->nodeValue,
+                'city' => $elem_city->item(0)->nodeValue,
+                'lat' => $elem_lat ->item(0)->nodeValue,
+                'lon' => $elem_lng->item(0)->nodeValue    
+            );
+
+            echo json_encode($arCityInfo);
             die();
          }
          else{
