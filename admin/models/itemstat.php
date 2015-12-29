@@ -16,6 +16,7 @@ class DownfilesModelItemstat extends JModelList{
         $query->from('#__downfiles');
         $query->leftJoin('#__downfiles_stat ON #__downfiles.id = #__downfiles_stat.filename_id');
         $query->where('TO_DAYS(NOW()) - TO_DAYS(#__downfiles_stat.date) <= 30 AND #__downfiles_stat.filename_id = '.$fileID);
+        $query->order('#__downfiles_stat.date DESC');
         
         return $query;
     }
