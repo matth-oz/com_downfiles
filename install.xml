@@ -39,7 +39,6 @@
                 </submenu>
 		<files folder="admin">
 			<folder>controllers</folder>
-			<folder>geo</folder>
 			<folder>helpers</folder>
 			<folder>img</folder>
 			<folder>js</folder>
