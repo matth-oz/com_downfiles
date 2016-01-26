@@ -27,7 +27,7 @@
                 $mime = mime_content_type($file_name);
                 
                 header('Content-Type: '.$mime.'; charset=utf-8');
-                header('Content-Disposition: attachment; filename='.$file_name);
+                header('Content-Disposition: attachment; filename='.basename($file_name));
                 
                 // сохраняем в БД id файла, дату, IP-адрес            
                 if(readfile($file_name)){
