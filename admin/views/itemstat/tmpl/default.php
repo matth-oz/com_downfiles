@@ -9,6 +9,9 @@ $document->addScript('/administrator/components/com_downfiles/js/getip.js','text
 $qd = count($this->itemstat);
 ?>
 <?php if($qd > 0):?>
+<div>
+     <?php echo JHtml::link(JRoute::_('index.php?option=com_downfiles&view=stats'),JText::_('COM_DOWNFILES_BACKTOLIST_LINK'));?>
+</div>
 <table class="table table-stripped">
     <thead>
         <th><?php echo JText::_('COM_DOWNFILES_ITEM_NAME');?></th>        
