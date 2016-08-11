@@ -39,30 +39,58 @@ class DownfilesControllerDownFiles extends JControllerAdmin{
     }
     
     public function getipinfo(){
-         $ip = JFactory::getApplication()->input->get('ip');
-         if(!empty($ip)){
-            header('Content-type: text/plain; charset=utf8');
-            $xml_file = 'http://api.sypexgeo.net/xml/'.$ip;
-            $xml_object = new DOMDocument();
-            $xml_object->load($xml_file);
+		$ip = JFactory::getApplication()->input->get('ip');
+		if(!empty($ip)){
+			header('Content-type: text/plain; charset=utf8');
+			$xml_file = 'http://api.sypexgeo.net/xml/'.$ip;
+			$xml_object = new DOMDocument();
+			$xml_object->load($xml_file);
+			
+			$arCityInfo = Array();
+			$country_id = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('country_id')->item(0)->nodeValue;
+			
+			if(isset($country_id) && $country_id==0){
+				// не определено по IP				
+				$arCityInfo['unknown_ip'] = JText::_('COM_DOWNFILES_GEO_NOT_DETERMINED');		
+			}
+			else{
+				$elem_country = $xml_object->getElementsByTagName('country')->item(0)->getElementsByTagName('name_ru');
+				$elem_city = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('name_ru');
+				$elem_lat = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('lat');
+				$elem_lng = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('lon');
 
-            $elem_country = $xml_object->getElementsByTagName('country')->item(0)->getElementsByTagName('name_ru');
-            $elem_city = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('name_ru');
-            $elem_lat = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('lat');
-            $elem_lng = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('lon');
-
-            $arCityInfo = Array(
-                'country' => $elem_country->item(0)->nodeValue,
-                'city' => $elem_city->item(0)->nodeValue,
-                'lat' => $elem_lat ->item(0)->nodeValue,
-                'lon' => $elem_lng->item(0)->nodeValue    
-            );
-
-            echo json_encode($arCityInfo);
-            die();
+				$arCityInfo['country'] = $elem_country->item(0)->nodeValue;
+				$arCityInfo['city'] = $elem_city->item(0)->nodeValue;
+				$arCityInfo['lat'] = $elem_lat ->item(0)->nodeValue;
+				$arCityInfo['lon'] = $elem_lng->item(0)->nodeValue;
+			}
+			
+			echo json_encode($arCityInfo);
+			die();			
          }
          else{
             return false; 
          }
     }
+	
+	public function operateonlink(){
+		$action = JFactory::getApplication()->input->get('action');
+		$recId = JFactory::getApplication()->input->get('recId');
+		if(!empty($action) && !empty($recId)){
+			
+			$module_link = ($action == 'enable_link') ? 1 : 0;
+			$db = JFactory::getDBO(); 
+			$q = "UPDATE #__downfiles SET `module_link`= $module_link WHERE id = $recId;";
+			$db->setQuery($q);
+			$res = $db->execute();
+			
+			$arRes = Array();
+			$arRes['result'] = ($res === true) ? 'success' : 'failure';
+						
+			echo json_encode($arRes);
+		}
+		else{
+			return false;
+		}		
+	}	
 }
