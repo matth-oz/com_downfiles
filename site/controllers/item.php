@@ -26,8 +26,14 @@
                 // формируем header на основе расширения файла и отправляем заголовки
                 $mime = mime_content_type($file_name);
                 
-                header('Content-Type: '.$mime.'; charset=utf-8');
-                header('Content-Disposition: attachment; filename='.basename($file_name));
+				header('Content-Disposition: attachment; filename='.basename($file_name));
+				header("Content-Length: " . filesize($file_name));
+				header("Content-Type: application/force-download");				
+				header("Content-Type: application/download");
+				header('Content-Type: '.$mime.'; charset=utf-8');
+				header("Pragma: no-cache");
+				header("Expires: 0");
+                
                 
                 // сохраняем в БД id файла, дату, IP-адрес            
                 if(readfile($file_name)){
