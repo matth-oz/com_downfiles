@@ -22,6 +22,7 @@ defined('_JEXEC') or die();?>
         <?php echo JHtml::link(JRoute::_('index.php?option=com_downfiles&view=stats'),JText::_('COM_DOWNFILES_STATFILTER_NON'));?>    
     <?php endif;?>
 </div>
+<?if(count($this->statInfo) > 0):?>
 <table class="table table-stripped table-hover">
     <thead>
         <th><?php echo JText::_('COM_DOWNFILES_ITEM_ID')?></th>
@@ -43,3 +44,6 @@ defined('_JEXEC') or die();?>
         
     </tfoot>    
 </table>
+<?php else:?>
+    <div><?php echo JText::_('COM_DOWNFILES_EMPTY_STATISTIC')?></div>
+<?php endif;?>
