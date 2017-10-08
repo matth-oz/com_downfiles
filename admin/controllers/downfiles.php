@@ -76,7 +76,6 @@ class DownfilesControllerDownFiles extends JControllerAdmin{
 					$arCityInfo['unknown_ip'] = JText::_('COM_DOWNFILES_GEO_NOT_DETERMINED');
 				}
 			}
-
 			echo json_encode($arCityInfo);
 			die();			
          }
