@@ -39,49 +39,40 @@ class DownfilesControllerDownFiles extends JControllerAdmin{
     }
     
     public function getipinfo(){
-		$ip = JFactory::getApplication()->input->get('ip');
-		if(!empty($ip)){
-			$arCityInfo = Array();
 
-			header('Content-type: text/plain; charset=utf8');
-			$xml_file = 'http://api.sypexgeo.net/xml/'.$ip;
+        // получаем параметры компонента
+        $params = JComponentHelper::getParams('com_downfiles');
+        $ipGeoDataFld = $params->get('geodatafolder');
 
-			$xml_object = new DOMDocument();
-			$xml_object->load($xml_file);
+        $ip = JFactory::getApplication()->input->get('ip');
+        if(!empty($ip)){
+            $arCityInfo = Array();
 
-			$error_txt = $xml_object->getElementsByTagName('ip')->item(0)->getAttribute('error');
+            if(!empty($ipGeoDataFld)){
+                header('Content-type: text/plain; charset=utf8');
+                require_once JPATH_COMPONENT.'/helpers/SxGeo.php';
+                $SxGeo = new SxGeo(JPATH_ROOT.'/'.$ipGeoDataFld.'/SxGeoCity.dat');
 
-			if(!empty($error_txt)){
-				$ip_num = $xml_object->getElementsByTagName('ip')->item(0)->getAttribute('num');
-				$arCityInfo['limit_is_settled'] = $error_txt.' '.$ip_num;
-			}
+                $arCityData = $SxGeo->getCityFull($ip);
 
-			if(!isset($arCityInfo['limit_is_settled'])){
-				$country_id = $xml_object->getElementsByTagName('country')->item(0)->getElementsByTagName('id')->item(0)->nodeValue;
+                if($arCityData['city']['id'] != 0){
+                    $arCityInfo['country'] =  $arCityData['country']['name_ru'];
+                    $arCityInfo['city'] =  $arCityData['city']['name_ru'];
+                    $arCityInfo['lat'] = $arCityData['city']['lat'];
+                    $arCityInfo['lon'] = $arCityData['city']['lon'];
+                }
+                else{
+                    // не определено по IP
+                    $arCityInfo['unknown_ip'] = JText::_('COM_DOWNFILES_GEO_NOT_DETERMINED');
+                }
+            }
 
-				if(!is_null($country_id)){
-					$elem_country = $xml_object->getElementsByTagName('country')->item(0)->getElementsByTagName('name_ru');
-					$elem_city = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('name_ru');
-					$elem_lat = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('lat');
-					$elem_lng = $xml_object->getElementsByTagName('city')->item(0)->getElementsByTagName('lon');
-
-					$arCityInfo['country'] = $elem_country->item(0)->nodeValue;
-					$arCityInfo['city'] = $elem_city->item(0)->nodeValue;
-					$arCityInfo['lat'] = $elem_lat ->item(0)->nodeValue;
-					$arCityInfo['lon'] = $elem_lng->item(0)->nodeValue;
-
-				}
-				else{
-					// не определено по IP
-					$arCityInfo['unknown_ip'] = JText::_('COM_DOWNFILES_GEO_NOT_DETERMINED');
-				}
-			}
-			echo json_encode($arCityInfo);
-			die();			
-         }
-         else{
-            return false; 
-         }
+            echo json_encode($arCityInfo);
+            die();
+        }
+        else{
+            return false;
+        }
     }
 	
 	public function operateonlink(){

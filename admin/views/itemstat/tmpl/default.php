@@ -4,7 +4,7 @@ defined('_JEXEC') or exit();
 $document = JFactory::getDocument();
 $document->addStylesheet('/administrator/components/com_downfiles/js/jquery.fancybox.css');
 $document->addScript('/administrator/components/com_downfiles/js/jquery.fancybox.pack.js','text/javascript',true);
-$document->addScript('http://api-maps.yandex.ru/2.1/?lang=ru_RU','text/javascript',true);
+$document->addScript('https://api-maps.yandex.ru/2.1/?lang=ru_RU','text/javascript',true);
 $document->addScript('/administrator/components/com_downfiles/js/getip.js','text/javascript',true);
 $qd = count($this->itemstat);
 ?>

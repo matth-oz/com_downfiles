@@ -13,5 +13,10 @@
             type="text" 
             label="COM_DOWNFILES_ALWFLTPS_LABEL" 
             description="COM_DOWNFILES_ALWFLTPS_DESC" />
+
+        <field name="geodatafolder"
+               type="text"
+               label="COM_DOWNFILES_GEODATAFOLDER_LABEL"
+               description="COM_DOWNFILES_GEODATAFOLDER_DESC" />
     </fieldset>
 </config>
